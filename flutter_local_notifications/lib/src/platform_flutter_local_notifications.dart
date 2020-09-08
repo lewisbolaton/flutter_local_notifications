@@ -149,13 +149,13 @@ class AndroidFlutterLocalNotificationsPlugin
   @override
   Future<void> periodicallyShow(
       int id, String title, String body, RepeatInterval repeatInterval,
-      {AndroidNotificationDetails notificationDetails, String payload, Duration delay}) async {
+      {AndroidNotificationDetails notificationDetails, String payload, Duration advance}) async {
     validateId(id);
     await _channel.invokeMethod('periodicallyShow', <String, dynamic>{
       'id': id,
       'title': title,
       'body': body,
-      'calledAt': DateTime.now().millisecondsSinceEpoch + delay.inMilliseconds,
+      'calledAt': DateTime.now().millisecondsSinceEpoch - advance.inMilliseconds,
       'repeatInterval': repeatInterval.index,
       'platformSpecifics': notificationDetails?.toMap(),
       'payload': payload ?? ''
